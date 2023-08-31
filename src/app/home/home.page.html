@@ -1,20 +1,44 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>
-      Blank
+    <ion-title style="font-size: 18px;padding: 0px;" class="ion-text-center">
+      @awesome-cordova-plugins/calendar
     </ion-title>
   </ion-toolbar>
 </ion-header>
-
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
+<ion-content [fullscreen]="true" class="ion-padding-top">
   <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+    <p>Calendar names</p>
+    <ion-accordion-group #accordionGroup expand="inset" (ionChange)="onChange()">
+      <ion-accordion [value]="item.id" *ngFor="let item of listNames">
+        <ion-item slot="header" color="light">
+          <ion-label>{{item.name}}</ion-label>
+        </ion-item>
+        <div class="ion-padding" slot="content">
+          <ion-list>
+            <ion-item-sliding *ngFor="let event of listEvents">
+              <ion-item>
+                <ion-label>
+                  <h1>{{event.title}}</h1>
+                  <p>{{event.location}}</p>
+                  <p>{{event.message}}</p>
+                </ion-label>
+              </ion-item>
+              <ion-item-options>
+                <ion-item-option color="danger" (click)="deleteEvent(event)">
+                  <ion-icon slot="bottom" name="trash"></ion-icon>
+                  Delete
+                </ion-item-option>
+              </ion-item-options>
+            </ion-item-sliding>
+          </ion-list>
+        </div>
+      </ion-accordion>
+    </ion-accordion-group>
+    <ion-button size="full" color="secondary"  (click)="openCalendar()">
+      Open Calendar
+    </ion-button>
+    <ion-button size="full" (click)="createEvent()">
+      Add Event
+    </ion-button>
   </div>
 </ion-content>
